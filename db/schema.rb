@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_29_100116) do
     t.string "organization"
     t.string "me_uri"
     t.string "webhook_uuid"
+    t.string "creator"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -54,7 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_29_100116) do
     t.datetime "start_time"
     t.string "invitee_first_name"
     t.string "invitee_last_name"
-    t.string "invitee_status"
+    t.string "event_status"
     t.string "reschedule_url"
     t.string "phone_number"
     t.integer "property_id"

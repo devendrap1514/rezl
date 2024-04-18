@@ -7,7 +7,7 @@ class CreateTours < ActiveRecord::Migration[7.0]
       t.datetime :start_time
       t.string :invitee_first_name
       t.string :invitee_last_name
-      t.string :invitee_status
+      t.string :event_status
       t.string :reschedule_url
       t.string :phone_number
       t.references :property

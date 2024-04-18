@@ -22,7 +22,7 @@ class WebhookSubscribeService
       user = me_body['resource']['uri']
       property.me_uri = user
 
-      signing_key = ENV['WEBHOOK_SIGNING_KEY'] + token
+      signing_key = ENV['WEBHOOK_SIGNING_KEY']
 
       url = "https://api.calendly.com/webhook_subscriptions/"
       url = URI(url)
@@ -36,7 +36,6 @@ class WebhookSubscribeService
       request["Authorization"] = "Bearer #{token}"
 
       redirect_url = ENV['CALENDLY_REDIRECT_URL']
-
       request.body = "{\n  \"url\": \"#{redirect_url}\",\n  \"events\": [\n    \"invitee.created\",\n    \"invitee.canceled\"\n  ],\n  \"organization\": \"#{organization}\",\n  \"scope\": \"organization\",\n  \"signing_key\": \"#{signing_key}\"\n}"
 
       response = http.request(request)
@@ -44,6 +43,8 @@ class WebhookSubscribeService
       if response.code == '201'
         webhook_body = JSON.parse(response.body)
         property.webhook_uuid = webhook_body['resource']['uri'].gsub(url, '')
+        property.creator = webhook_body['resource']['creator']
+
         return true, "Successfully subscribe"
       else
         return false, body['title']
@@ -68,10 +69,8 @@ class WebhookSubscribeService
     request["Content-Type"] = 'application/json'
     request["Authorization"] = "Bearer #{token}"
     response = http.request(request)
-    byebug
     body = JSON.parse(response.body) unless response.body.nil?
     if response.code == '204'
-      byebug
       return true, 'Successfully unsubscribe'
     else
       return false, body['title']

@@ -6,6 +6,7 @@ class CreateProperties < ActiveRecord::Migration[7.0]
       t.string :organization
       t.string :me_uri
       t.string :webhook_uuid
+      t.string :creator
 
       t.timestamps
     end
