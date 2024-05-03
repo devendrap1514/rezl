@@ -37,6 +37,7 @@ class WebhooksController < ApplicationController
           'invitee_last_name': payload['last_name'],
           'reschedule_url': payload['reschedule_url'],
           'phone_number': payload['questions_and_answers'][0]['answer']
+          'timezone': payload['timezone']
         }
         EventHandleWorker.new.perform(property.id, body)
       end

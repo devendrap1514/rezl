@@ -11,11 +11,13 @@ class EventHandleWorker
     if tour
       if tour.status == 'awaiting' && event['status'] == 'canceled'
         tour.destroy
+        return 'Delete awaiting event that is canceled'
       elsif tour.status == 'scheduled' && event['status'] == 'canceled'
         tour.destroy
+        return 'Delete scheduled event that is canceled'
       end
     else
-      return if event['status'] == 'canceled'
+      return 'Not store canceled event' if event['status'] == 'canceled'
       tour = Tour.new(
         uri: event['uri'],
         event_name: event['event_name'],
@@ -26,10 +28,11 @@ class EventHandleWorker
         reschedule_url: event['reschedule_url'],
         phone_number: event['phone_number'],
         property_id: property_id,
-        status: 'awaiting'
+        status: 'awaiting',
+        timezone: event['timezone']
       )
       tour.save
-      File.write('output.txt', "#{tour.errors.full_messages}\n", mode: 'a+') if Rails.env.development?
+      return 'Event stored successfully'
     end
   end
 end

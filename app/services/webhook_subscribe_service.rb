@@ -24,8 +24,8 @@ class WebhookSubscribeService
 
       signing_key = ENV['WEBHOOK_SIGNING_KEY']
 
-      url = "https://api.calendly.com/webhook_subscriptions/"
-      url = URI(url)
+      end_point = "https://api.calendly.com/webhook_subscriptions/"
+      url = URI(end_point)
 
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
@@ -42,18 +42,18 @@ class WebhookSubscribeService
       body = JSON.parse(response.body)
       if response.code == '201'
         webhook_body = JSON.parse(response.body)
-        property.webhook_uuid = webhook_body['resource']['uri'].gsub(url, '')
+        property.webhook_uuid = webhook_body['resource']['uri'].gsub(end_point, '')
         property.creator = webhook_body['resource']['creator']
 
         return true, "Successfully subscribe"
       else
-        return false, body['title']
+        return false, body['message']
       end
     else
-      return false, body['title']
+      return false, body['message']
     end
   rescue => e
-    return false, e.message
+    return false, "App Error: #{e.message}"
   end
 
   def unsubscribe(property)
@@ -73,7 +73,7 @@ class WebhookSubscribeService
     if response.code == '204'
       return true, 'Successfully unsubscribe'
     else
-      return false, body['title']
+      return false, body['message']
     end
   rescue => e
     return false, e.message

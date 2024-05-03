@@ -11,6 +11,7 @@ class CreateTours < ActiveRecord::Migration[7.0]
       t.string :reschedule_url
       t.string :phone_number
       t.references :property
+      t.string :timezone
 
       t.timestamps
     end
