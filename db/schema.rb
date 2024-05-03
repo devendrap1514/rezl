@@ -10,7 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_29_100116) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_03_063853) do
+  create_table "account_property_terms", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.integer "property_term_and_conditions_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_property_terms_on_account_id"
+    t.index ["property_term_and_conditions_id"], name: "index_account_property_terms_on_property_term_and_conditions_id"
+  end
+
+  create_table "account_terms", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.integer "term_and_conditions_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_terms_on_account_id"
+    t.index ["term_and_conditions_id"], name: "index_account_terms_on_term_and_conditions_id"
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -48,6 +72,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_29_100116) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "property_term_and_conditions", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.integer "property_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_property_term_and_conditions_on_property_id"
+  end
+
+  create_table "term_and_conditions", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tours", force: :cascade do |t|
     t.string "uri"
     t.string "event_name"
@@ -59,9 +99,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_29_100116) do
     t.string "reschedule_url"
     t.string "phone_number"
     t.integer "property_id"
+    t.string "timezone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_tours_on_property_id"
   end
 
+  add_foreign_key "account_property_terms", "accounts"
+  add_foreign_key "account_property_terms", "property_term_and_conditions", column: "property_term_and_conditions_id"
+  add_foreign_key "account_terms", "accounts"
+  add_foreign_key "account_terms", "term_and_conditions", column: "term_and_conditions_id"
+  add_foreign_key "property_term_and_conditions", "properties"
 end

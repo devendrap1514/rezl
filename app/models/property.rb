@@ -1,10 +1,13 @@
 class Property < ApplicationRecord
   has_many :tours
 
-  validate :validate_calendly_token
-  validates :calendly_token, uniqueness: true
-  validates :organization, uniqueness: true, if: -> { calendly_token.present? }
-  before_destroy :unsubscribe_webhook
+  has_many :property_term_and_conditions
+
+  # validate :validate_calendly_token
+  # validates :calendly_token, uniqueness: true
+  # validates :organization, uniqueness: true, if: -> { calendly_token.present? }
+  validates :name, presence: true
+  # before_destroy :unsubscribe_webhook
 
 
   def validate_calendly_token

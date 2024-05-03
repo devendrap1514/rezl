@@ -8,5 +8,11 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/admin/sidekiq'
   end
 
-  post '/webhooks/calendly', to: 'webhooks#calendly'
+  # post '/webhooks/calendly', to: 'webhooks#calendly'
+
+  resources :term_and_conditions, only: %i[index] do
+    collection do
+      post :accept_terms
+    end
+  end
 end
