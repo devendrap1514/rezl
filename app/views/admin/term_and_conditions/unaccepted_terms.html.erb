@@ -1,4 +1,3 @@
-# app/views/admin/terms_and_conditions/unaccepted_terms.html.erb
 <% @unaccepted_terms.each do |term| %>
   <%= term.title %>: <%= term.description %><br>
   <%= form_with(url: accept_terms_admin_term_and_conditions_path, method: :post) do |form| %>
