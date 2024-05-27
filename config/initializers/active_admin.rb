@@ -1,4 +1,11 @@
 ActiveAdmin.setup do |config|
+  config.before_action do
+    if request.path.starts_with? '/admin/logout' || request.path.starts_with? '/admin/term_and_conditions/unaccpted_terms' || request.path.starts_with? '/admin/term_and_conditions/accept_terms'
+      byebug
+    else current_admin_user && !current_admin_user.all_terms_accepted? && !request.path.starts_with?(accept_terms_admin_term_and_conditions_path)
+      redirect_to unaccpted_terms_admin_term_and_conditions_path, alert: "You must accept the terms and conditions to continue."
+    end
+  end
   # == Site Title
   #
   # Set the title that is displayed on the main layout

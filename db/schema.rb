@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_03_063853) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_27_131156) do
   create_table "account_property_terms", force: :cascade do |t|
     t.integer "account_id", null: false
     t.integer "property_term_and_conditions_id", null: false
@@ -47,6 +47,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_063853) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "admin_terms", force: :cascade do |t|
+    t.integer "admin_user_id", null: false
+    t.integer "term_and_condition_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_admin_terms_on_admin_user_id"
+    t.index ["term_and_condition_id"], name: "index_admin_terms_on_term_and_condition_id"
   end
 
   create_table "admin_users", force: :cascade do |t|
@@ -109,5 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_063853) do
   add_foreign_key "account_property_terms", "property_term_and_conditions", column: "property_term_and_conditions_id"
   add_foreign_key "account_terms", "accounts"
   add_foreign_key "account_terms", "term_and_conditions", column: "term_and_conditions_id"
+  add_foreign_key "admin_terms", "admin_users"
+  add_foreign_key "admin_terms", "term_and_conditions"
   add_foreign_key "property_term_and_conditions", "properties"
 end

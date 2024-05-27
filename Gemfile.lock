@@ -90,6 +90,7 @@ GEM
     calendly (0.14.0)
       faraday (>= 1.0.0, < 3.0.0)
       oauth2 (~> 1.4, >= 1.4.4)
+    cancancan (3.6.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -368,6 +369,7 @@ DEPENDENCIES
   bootsnap
   byebug
   calendly
+  cancancan
   capybara
   debug
   devise

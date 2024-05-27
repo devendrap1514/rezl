@@ -84,3 +84,4 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'sidekiq-status'
 gem 'calendly'
 gem 'fast_jsonapi'
+gem 'cancancan'
