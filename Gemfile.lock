@@ -55,6 +55,8 @@ GEM
       kaminari (>= 1.2.1)
       railties (>= 6.1)
       ransack (>= 4.0)
+    activeadmin_quill_editor (1.2.0)
+      activeadmin (>= 2.9, < 4)
     activejob (7.0.8.1)
       activesupport (= 7.0.8.1)
       globalid (>= 0.3.6)
@@ -123,6 +125,13 @@ GEM
     erubi (1.12.0)
     et-orbi (1.2.7)
       tzinfo
+    factory_bot (6.4.6)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
+    faker (3.3.1)
+      i18n (>= 1.8.11, < 2)
     faraday (2.9.0)
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
@@ -242,6 +251,10 @@ GEM
       activesupport (= 7.0.8.1)
       bundler (>= 1.15.0)
       railties (= 7.0.8.1)
+    rails-controller-testing (1.0.5)
+      actionpack (>= 5.0.1.rc1)
+      actionview (>= 5.0.1.rc1)
+      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
@@ -366,6 +379,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
+  activeadmin_quill_editor
   bootsnap
   byebug
   calendly
@@ -374,11 +388,14 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  factory_bot_rails
+  faker
   fast_jsonapi
   importmap-rails
   jbuilder
   puma (~> 5.0)
   rails (~> 7.0.8)
+  rails-controller-testing
   redis (~> 4.0)
   rspec-rails
   sassc-rails

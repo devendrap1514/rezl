@@ -25,4 +25,7 @@ ActiveAdmin.register AdminUser do
     f.actions
   end
 
+  # controller do
+  #   before_action :check_updated_terms, only: :index
+  # end
 end

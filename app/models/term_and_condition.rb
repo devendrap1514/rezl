@@ -6,4 +6,8 @@ class TermAndCondition < ApplicationRecord
   has_many :admin_users, through: :admin_terms
 
   validates :title, :description, presence: true
+
+  after_update do
+    admin_users.destroy_all
+  end
 end

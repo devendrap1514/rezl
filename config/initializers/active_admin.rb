@@ -349,4 +349,11 @@ ActiveAdmin.setup do |config|
   # You can switch to using Webpacker here.
   #
   # config.use_webpacker = true
+
+  config.before_action :check_updated_terms, except: %i[updated_terms accept_terms new create destroy]
+  def check_updated_terms
+    if current_admin_user && !current_admin_user.accepted?# && current_admin_user.role.name == SUB_ADMIN
+      redirect_to updated_terms_admin_term_and_conditions_path
+    end
+  end
 end

@@ -22,11 +22,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_27_131156) do
 
   create_table "account_terms", force: :cascade do |t|
     t.integer "account_id", null: false
-    t.integer "term_and_conditions_id", null: false
+    t.integer "term_and_condition_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_account_terms_on_account_id"
-    t.index ["term_and_conditions_id"], name: "index_account_terms_on_term_and_conditions_id"
+    t.index ["term_and_condition_id"], name: "index_account_terms_on_term_and_condition_id"
   end
 
   create_table "accounts", force: :cascade do |t|
@@ -117,7 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_27_131156) do
   add_foreign_key "account_property_terms", "accounts"
   add_foreign_key "account_property_terms", "property_term_and_conditions", column: "property_term_and_conditions_id"
   add_foreign_key "account_terms", "accounts"
-  add_foreign_key "account_terms", "term_and_conditions", column: "term_and_conditions_id"
+  add_foreign_key "account_terms", "term_and_conditions"
   add_foreign_key "admin_terms", "admin_users"
   add_foreign_key "admin_terms", "term_and_conditions"
   add_foreign_key "property_term_and_conditions", "properties"

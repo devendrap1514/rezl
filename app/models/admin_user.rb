@@ -7,9 +7,12 @@ class AdminUser < ApplicationRecord
   has_many :admin_terms, dependent: :destroy
   has_many :term_and_conditions, through: :admin_terms
 
-  def all_terms_accepted?
-    TermAndCondition.all.all? do |term|
-      term_and_conditions.include?(term)
-    end
+  def accepted?
+    return true if unaccepted_terms.empty?
+    false
+  end
+
+  def unaccepted_terms
+    TermAndCondition.all - term_and_conditions
   end
 end

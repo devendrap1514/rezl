@@ -1,0 +1,116 @@
+<style type="text/css">
+  .form-container {
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-container h3 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .term-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .term-item:last-child {
+    border-bottom: none;
+  }
+
+  .term-item label {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+  }
+
+  .term-description {
+    margin-top: 10px;
+    padding: 10px;
+    display: none;
+    font-style: italic;
+    color: #555;
+    font-size: 14px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .term-item .description-toggle {
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 14px;
+  }
+
+  .term-item .description-toggle:hover {
+    text-decoration: underline;
+  }
+
+  .submit-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    color: white;
+    background: #C22167;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .term-checkbox {
+    width: 12px;
+    height: 12px;
+    transform: scale(1.5);
+    margin-right: 7px;
+    cursor: pointer;
+  }
+</style>
+
+<%= form_with(url: accept_terms_admin_term_and_conditions_path, method: :post, html: { class: 'form-container' }) do %>
+  <h3><%= @page_title %></h3>
+  <div>
+    <% @current_admin_user.unaccepted_terms.each do |term| %>
+      <div class="term-item">
+        <label>
+          <%= check_box_tag 'term_ids[]', term.id, false, class: 'term-checkbox' %>
+          &nbsp<%= term.title %>
+        </label>
+        <span class="description-toggle">Read Description</span>
+        <div class="term-description">
+          <%= raw term.description %>
+        </div>
+      </div>
+    <% end %>
+    <%= submit_tag 'Accept', class: 'submit-button' %>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var toggles = document.querySelectorAll('.description-toggle');
+    toggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function() {
+        var description = this.nextElementSibling;
+        if (description.style.display === 'none' || description.style.display === '') {
+          description.style.display = 'block';
+          this.textContent = 'Hide Description';
+        } else {
+          description.style.display = 'none';
+          this.textContent = 'Read Description';
+        }
+      });
+    });
+  });
+</script>
